@@ -5,6 +5,9 @@ ccflags-y += -I$(srctree)/drivers/input/touchscreen/mediatek/GT9XX_hotknot/inclu
 ccflags-y += -I$(srctree)/drivers/misc/mediatek/include/mt-plat/
 ccflags-y += -I$(srctree)/drivers/misc/mediatek/include/mt-plat/$(MTK_PLATFORM)/include/
 
+ccflags-y += -I$(srctree)/drivers/input/touchscreen/mediatek/GT9XX_hotknot/include/config_default/
+ccflags-y += -I$(srctree)/drivers/input/touchscreen/mediatek/GT9XX_hotknot/include/firmware_default/
+
 obj-y	+=  gt9xx_driver.o
 obj-y	+=  goodix_tool.o
 obj-y	+=  gt9xx_update.o

@@ -1,0 +1,16 @@
+f_obex.c:247:12:obex_get_alt	0	static
+f_obex.c:418:16:f_obex_attr_show	16	static
+f_obex.c:536:1:obexmod_exit	16	static
+f_obex.c:494:13:obex_free	16	static
+f_obex.c:254:13:obex_disable	32	static
+f_obex.c:195:12:obex_set_alt	48	static
+f_obex.c:502:13:obex_unbind	16	static
+f_obex.c:281:13:obex_disconnect	32	static
+f_obex.c:314:12:obex_bind	96	static
+f_obex.c:265:13:obex_connect	32	static
+f_obex.c:507:29:obex_alloc	32	static
+f_obex.c:473:38:obex_alloc_inst	32	static
+f_obex.c:445:16:f_obex_port_num_show	16	static
+f_obex.c:433:13:obex_attr_release	16	static
+f_obex.c:464:13:obex_free_inst	32	static
+f_obex.c:536:1:obexmod_init	16	static

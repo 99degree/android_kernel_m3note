@@ -44,12 +44,16 @@ static int tpd_pm_flag;
 static int tpd_tui_flag;
 static int tpd_tui_low_power_skipped;
 DEFINE_MUTEX(tui_lock);
-int tpd_halt = 0;
+static int tpd_halt = 0;
 static int tpd_eint_mode = 1;
 static struct task_struct *thread;
+#ifdef CONFIG_GTP_AUTO_UPDATE
 static struct task_struct *update_thread;
+#endif
 static struct task_struct *probe_thread;
+#ifdef CONFIG_GTP_AUTO_UPDATE
 static struct notifier_block pm_notifier_block;
+#endif
 static int tpd_polling_time = 50;
 static DECLARE_WAIT_QUEUE_HEAD(waiter);
 static DECLARE_WAIT_QUEUE_HEAD(pm_waiter);
@@ -57,8 +61,8 @@ static bool gtp_suspend;
 
 DECLARE_WAIT_QUEUE_HEAD(init_waiter);
 DEFINE_MUTEX(i2c_access);
-unsigned int touch_irq = 0;
-u8 int_type = 0;
+static unsigned int touch_irq = 0;
+//u8 int_type = 0;
 
 #if (defined(TPD_WARP_START) && defined(TPD_WARP_END))
 static int tpd_wb_start_local[TPD_WARP_CNT] = TPD_WARP_START;
@@ -531,7 +535,7 @@ void gt1x_auto_update_done(void)
 	tpd_pm_flag = 1;
 	wake_up_interruptible(&pm_waiter);
 }
-#if CONFIG_GTP_AUTO_UPDATE
+#ifdef CONFIG_GTP_AUTO_UPDATE
 int gt1x_pm_notifier(struct notifier_block *nb, unsigned long val, void *ign)
 {
 	switch (val) {
@@ -548,7 +552,7 @@ int gt1x_pm_notifier(struct notifier_block *nb, unsigned long val, void *ign)
 }
 #endif
 
-int tpd_reregister_from_tui(void)
+static int tpd_reregister_from_tui(void)
 {
 	int ret = 0;
 
@@ -1148,7 +1152,7 @@ static void tpd_resume(struct device *h)
 }
 
 static struct tpd_driver_t tpd_device_driver = {
-	.tpd_device_name = "gt9xx",
+	.tpd_device_name = "gt1151",
 	.tpd_local_init = tpd_local_init,
 	.suspend = tpd_suspend,
 	.resume = tpd_resume,
@@ -1161,7 +1165,7 @@ void tpd_off(void)
 	gt1x_irq_disable();
 }
 
-int tpd_enter_tui(void)
+__maybe_unused static int tpd_enter_tui(void)
 {
 	int ret = 0;
 
@@ -1170,7 +1174,7 @@ int tpd_enter_tui(void)
 	return ret;
 }
 
-int tpd_exit_tui(void)
+__maybe_unused static int tpd_exit_tui(void)
 {
 	int ret = 0;
 

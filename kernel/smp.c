@@ -716,6 +716,7 @@ PROC_FOPS_RW(timestamp_enable);
 #ifdef CONFIG_PROFILE_CPU
 PROC_FOPS_RO(cpu_lat);
 #endif
+#if defined(CONFIG_MTK_CPU_HOTPLUG_DEBUG_3) || defined(CONFIG_PROFILE_CPU)
 static int create_procfs(void)
 {
 	struct proc_dir_entry *dir = NULL;
@@ -764,6 +765,8 @@ static int create_procfs(void)
 	return 0;
 
 }
+#endif
+
 /* Called by boot processor to activate the rest. */
 void __init smp_init(void)
 {

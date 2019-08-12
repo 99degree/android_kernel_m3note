@@ -56,7 +56,7 @@ config MTK_BQ24196_SUPPORT
           It depends on config MTK_SMART_BATTERY
           and config MTK_SWCHR_SUPPORT
           Set to Yes if BQ24196 is used.
-	default n
+	default y
 
 config MTK_BQ24296_SUPPORT
 	bool "MTK_BQ24296_SUPPORT"
@@ -102,6 +102,15 @@ config MTK_FAN5405_SUPPORT
           and config MTK_SWCHR_SUPPORT
           Set to Yes if FAN5405 is used.
 	default n
+
+config MTK_SM5414_SUPPORT
+        bool "MTK_SM5414_SUPPORT"
+        help
+          This is to enable MediaTek supports to SM5414.
+          It depends on config MTK_SMART_BATTERY
+          and config MTK_SWCHR_SUPPORT
+          Set to Yes if SM5414 is used.
+        default y
 
 config MTK_RT9536_SUPPORT
 	bool "MTK_RT9536_SUPPORT"

@@ -66,6 +66,8 @@ ccflags-y += -I$(srctree)/drivers/misc/mediatek/video/include/                  
 
 ccflags-$(CONFIG_MTK_LCM) += -I$(srctree)/drivers/misc/mediatek/lcm/inc/
 
+CFLAGS_disp_lcm.o = -I$(srctree)/scripts/dtc/libfdt
+
 ifeq ($(CONFIG_MTK_SEC_VIDEO_PATH_SUPPORT),y)
 ifeq ($(CONFIG_TRUSTONIC_TEE_SUPPORT),y)
 include $(srctree)/drivers/misc/mediatek/gud/Makefile.include

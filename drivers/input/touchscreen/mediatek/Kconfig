@@ -24,7 +24,6 @@ config TOUCHSCREEN_MTK
 
 source "drivers/input/touchscreen/mediatek/GT1151/Kconfig"
 
-
 config TOUCHSCREEN_MTK_GT1151TB
 	bool "GT1151 for Mediatek package"
 	default n

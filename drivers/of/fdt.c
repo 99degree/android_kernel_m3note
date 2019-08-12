@@ -1142,4 +1142,26 @@ static int __init of_flat_dt_debugfs_export_fdt(void)
 module_init(of_flat_dt_debugfs_export_fdt);
 #endif
 
+static ssize_t of_fdt_raw_read(struct file *filp, struct kobject *kobj,
+			       struct bin_attribute *bin_attr,
+			       char *buf, loff_t off, size_t count)
+{
+	memcpy(buf, initial_boot_params + off, count);
+	return count;
+}
+
+static int __init of_fdt_raw_init(void)
+{
+	static struct bin_attribute of_fdt_raw_attr =
+		__BIN_ATTR(fdt, S_IRUSR, of_fdt_raw_read, NULL, 0);
+
+	if (!initial_boot_params)
+		return 0;
+
+	of_fdt_raw_attr.size = fdt_totalsize(initial_boot_params);
+	return sysfs_create_bin_file(firmware_kobj, &of_fdt_raw_attr);
+}
+
+late_initcall(of_fdt_raw_init);
+
 #endif /* CONFIG_OF_EARLY_FLATTREE */

@@ -16,8 +16,8 @@ config MTK_VIDEOX
 	help
 	  CONFIG_MTK_VIDEOX
 
-config MTK_LCM_PHYSICAL_ROTATION
-	string "MTK_LCM_PHYSICAL_ROTATION"
+config MTK_LCM_PHYSICAL_ROTATION_HW
+	string "MTK_LCM_PHYSICAL_ROTATION_HW"
 	help
 	  To set the angle between dimension of UI layout and LCM scan
 	  direction

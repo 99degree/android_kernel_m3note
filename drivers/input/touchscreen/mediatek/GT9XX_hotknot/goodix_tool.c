@@ -50,7 +50,7 @@ struct st_cmd_head {
 	u8 *data;		/* data pointer */
 };
 #pragma pack()
-struct st_cmd_head cmd_head;
+static struct st_cmd_head cmd_head;
 
 #define UPDATE_FUNCTIONS
 #define DATA_LENGTH_UINT    512
@@ -70,8 +70,8 @@ static s32 goodix_tool_read(char *page, char **start, off_t off, int count, int 
 static s32 (*tool_i2c_read)(u8 *, u16);
 static s32 (*tool_i2c_write)(u8 *, u16);
 
-s32 DATA_LENGTH = 0;
-s8 IC_TYPE[16] = "GT9XX";
+static s32 DATA_LENGTH = 0;
+static s8 IC_TYPE[16] = "GT9XX";
 
 
 #if defined(CONFIG_HOTKNOT_BLOCK_RW)

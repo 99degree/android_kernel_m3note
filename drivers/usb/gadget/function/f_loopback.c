@@ -317,7 +317,7 @@ static inline struct usb_request *lb_alloc_ep_req(struct usb_ep *ep, int len)
 	return alloc_ep_req(ep, len, buflen);
 }
 
-static int enable_endpoint(struct usb_composite_dev *cdev, struct f_loopback *loop,
+static int __maybe_unused enable_endpoint(struct usb_composite_dev *cdev, struct f_loopback *loop,
 		struct usb_ep *ep)
 {
 	struct usb_request			*req;

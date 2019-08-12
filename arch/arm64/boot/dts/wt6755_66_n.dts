@@ -1,8 +1,8 @@
 
 /dts-v1/;
 
-#include "mt6755.dtsi"
-#include "cust.dtsi"
+#include "wt6755_66_n/mt6755.dtsi"
+#include "wt6755_66_n/cust.dtsi"
 
 / {
 	memory@40000000 {

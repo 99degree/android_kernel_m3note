@@ -3000,6 +3000,7 @@ void bat_update_thread_wakeup(void)
 /* ///////////////////////////////////////////////////////////////////////////////////////// */
 /* // fop API */
 /* ///////////////////////////////////////////////////////////////////////////////////////// */
+extern signed int battery_meter_meta_tool_cali_car_tune(int meta_current);
 static long adc_cali_ioctl(struct file *file, unsigned int cmd, unsigned long arg)
 {
 	int *user_data_addr;
@@ -3256,13 +3257,14 @@ void check_battery_exist(void)
 			battery_log(BAT_LOG_CRTI,
 				    "[BATTERY] Battery is not exist, power off FAN5405 and system (%d)\n",
 				    baton_count);
-
 			battery_charging_control(CHARGING_CMD_ENABLE, &charging_enable);
+#if 0
 			#ifdef CONFIG_MTK_POWER_PATH_MANAGEMENT_SUPPORT
 			battery_charging_control(CHARGING_CMD_SET_PLATFORM_RESET, NULL);
 			#else
 			battery_charging_control(CHARGING_CMD_SET_POWER_OFF, NULL);
 			#endif
+#endif
 		}
 	}
 #endif

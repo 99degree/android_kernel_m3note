@@ -13,6 +13,9 @@
 
 #include <linux/slab.h>
 #include <linux/types.h>
+#include <linux/of.h>
+#include <linux/of_fdt.h>
+#include <linux/libfdt.h>
 #include "disp_log.h"
 #include "lcm_drv.h"
 #include "disp_drv_platform.h"
@@ -156,6 +159,52 @@ void _dump_lcm_info(disp_lcm_handle *plcm)
 	}
 }
 
+
+static int dt_scan_chosen_lcm(const char *p)
+{
+        const void *fdt = initial_boot_params;
+        int l;
+        int offset;
+
+        offset = fdt_path_offset(fdt, "/chosen");
+        if (offset < 0)
+                offset = fdt_path_offset(fdt, "/chosen@0");
+        if (offset < 0)
+                return -ENOENT;
+
+        p = fdt_getprop(fdt, offset, "atag,videolfb-lcmName", &l);
+        if (!p)
+                p = fdt_getprop(fdt, offset, "atag,videolfb-lcmname", &l);
+	else
+		DISPINFO("found lcm tag %s=%s","atag,videolfb-lcmName",p);
+
+        if (!p)
+                p = fdt_getprop(fdt, offset, "videolfb-lcmName", &l);
+        else
+                DISPINFO("found lcm tag %s=%s","atag,videolfb-lcmname",p);
+
+        if (!p)
+                p = fdt_getprop(fdt, offset, "videolfb-lcmname", &l);
+        else
+                DISPINFO("found lcm tag %s=%s","videolfb-lcmName",p);
+
+        if (!p)
+                p = fdt_getprop(fdt, offset, "lcmName", &l);
+        else
+                DISPINFO("found lcm tag %s=%s","videolfb-lcmname",p);
+
+        if (!p)
+                p = fdt_getprop(fdt, offset, "lcmname", &l);
+        else
+                DISPINFO("found lcm tag %s=%s","lcmName",p);
+
+	if (!p)
+		return -ENOENT;
+
+	return 0;
+}
+
+
 disp_lcm_handle *disp_lcm_probe(char *plcm_name, LCM_INTERFACE_ID lcm_id, int is_lcm_inited)
 {
 
@@ -199,6 +248,7 @@ disp_lcm_handle *disp_lcm_probe(char *plcm_name, LCM_INTERFACE_ID lcm_id, int is
 
 		lcmindex = 0;
 	} else {
+		const char *p = NULL;
 		if (plcm_name == NULL) {
 			/* TODO: we need to detect all the lcm driver */
 		} else {
@@ -222,11 +272,30 @@ disp_lcm_handle *disp_lcm_probe(char *plcm_name, LCM_INTERFACE_ID lcm_id, int is
 			}
 		}
 		/* TODO: */
+		/* last resort, get from /chosen tag */
+		if(!isLCMFound && (dt_scan_chosen_lcm(p) == 0)) {
+			DISPERR("FATAL ERROR: plcm_name=%s is_lcm_inited %d\n", plcm_name, is_lcm_inited);
+                        for (i = 0; i < _lcm_count(); i++) {
+                                lcm_drv = lcm_driver_list[i];
+                                if (!strcmp(lcm_drv->name, p)) {
+                                        isLCMFound = true;
+                                        isLCMInited = true;
+                                        lcmindex = i;
+                                        break;
+                                }
+                        }
+		}
+
 	}
 
 	if (isLCMFound == false) {
+		/* force to use 0th idx */
+		lcm_drv = lcm_driver_list[0];
+                isLCMFound = true;
+                isLCMInited = true;
+
 		DISPERR("FATAL ERROR!!!No LCM Driver defined\n");
-		return NULL;
+		//return NULL;
 	}
 
 	plcm = kzalloc(sizeof(uint8_t *) * sizeof(disp_lcm_handle), GFP_KERNEL);

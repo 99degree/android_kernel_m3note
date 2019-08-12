@@ -140,7 +140,7 @@ static enum idpin_state mtk_idpin_cur_stat = IDPIN_OUT;
 static struct switch_dev mtk_otg_state;
 
 static struct delayed_work mtk_xhci_delaywork;
-u32 xhci_debug_level = K_ALET | K_CRIT | K_ERR | K_WARNIN;
+unsigned int xhci_debug_level = K_ALET | K_CRIT | K_ERR | K_WARNIN;
 
 int mtk_iddig_debounce = 50;
 module_param(mtk_iddig_debounce, int, 0644);
@@ -206,7 +206,7 @@ static struct miscdevice xhci_misc_uevent = {
 
 
 
-U32 pmic_bak_regs[PMIC_REG_BAK_NUM][2] = {
+static unsigned int pmic_bak_regs[PMIC_REG_BAK_NUM][2] = {
 	{0x8D22, 0}, {0x8D14, 0}, {0x803C, 0}, {0x8036, 0}, {0x8D24, 0},
 	{0x8D16, 0}, {0x803A, 0}, {0x8046, 0}, {0x803E, 0}, {0x8044, 0}
 };
@@ -424,21 +424,17 @@ int mtk_is_hub_active(void)
 #endif
 static void mtk_enable_otg_mode(void)
 {
-#if defined(CONFIG_MTK_BQ25898_DUAL_SUPPORT)
-	bq25898_otg_en(0x01);
-	bq25898_set_boost_ilim(0x01);
-#else
 	set_chr_enable_otg(0x1);
 	set_chr_boost_current_limit(1500);
-#endif
 }
 
 static void mtk_disable_otg_mode(void)
 {
-#if defined(CONFIG_MTK_BQ25898_DUAL_SUPPORT)
-	bq25898_otg_en(0x0);
+#if defined(CONFIG_MTK_OTG_PMIC_BOOST_5V)
+        mtk_disable_pmic_otg_mode();
 #else
 	set_chr_enable_otg(0x0);
+	set_chr_boost_current_limit(500);
 #endif
 }
 
@@ -507,9 +503,9 @@ static void mtk_xhci_hcd_cleanup(void)
 	xhci_unregister_plat();
 }
 
-static void mtk_xhci_imod_set(u32 imod)
+static void mtk_xhci_imod_set(unsigned int imod)
 {
-	u32 temp;
+	unsigned int temp;
 
 	temp = readl(&mtk_xhci->ir_set->irq_control);
 	temp &= ~0xFFFF;
@@ -694,7 +690,7 @@ int mtk_xhci_eint_iddig_init(void)
 	int retval = 0;
 	struct device_node *node;
 	int iddig_gpio, iddig_debounce;
-	u32 ints[2] = {0, 0};
+	unsigned int ints[2] = {0, 0};
 
 
 	node = of_find_compatible_node(NULL, NULL, "mediatek,usb3_xhci");

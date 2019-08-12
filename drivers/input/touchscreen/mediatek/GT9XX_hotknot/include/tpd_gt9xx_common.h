@@ -86,7 +86,10 @@ extern u16 total_len;
 extern u8 gtp_rawdiff_mode;
 extern u8 load_fw_process;
 
-extern int tpd_halt;
+extern int tpd_halt_gt9xx;
+/*avoid var duplication*/
+#define tpd_halt tpd_halt_gt9xx  
+
 extern s32 gtp_send_cfg(struct i2c_client *client);
 extern void gtp_reset_guitar(struct i2c_client *client, s32 ms);
 extern void gtp_int_sync(s32 ms);
@@ -432,6 +435,6 @@ extern void gtp_esd_switch(struct i2c_client *client, s32 on);
 
 extern u8 fw_updating;
 extern u8 cfg_len;
-extern struct mutex i2c_access;
+//extern struct mutex i2c_access;
 
 #endif				/* TPD_CUSTOM_GT9XX_H__ */

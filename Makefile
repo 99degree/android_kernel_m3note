@@ -4,6 +4,10 @@ SUBLEVEL = 35
 EXTRAVERSION =
 NAME = Shuffling Zombie Juror
 
+ARCH = arm64
+CROSS_COMPILE = /mnt/d/gcc-linaro-4.9.4-2017.01-x86_64_aarch64-linux-gnu/bin/aarch64-linux-gnu-
+
+
 # *DOCUMENTATION*
 # To see a list of typical targets execute "make help"
 # More info can be located in ./README

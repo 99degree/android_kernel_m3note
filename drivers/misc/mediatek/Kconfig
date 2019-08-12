@@ -323,7 +323,7 @@ menu "Misc configs"
 
 config MTK_MEM
 	bool "Support platform memory information"
-	default y
+	default n
 	help
 	  MTK_MEM provides basic platform memory information
 	  for mediatek platform drivers. It also provides

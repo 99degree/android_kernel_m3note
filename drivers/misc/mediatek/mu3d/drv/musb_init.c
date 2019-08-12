@@ -110,6 +110,10 @@ static const struct of_device_id mtu3d_of_match[] = {
 	 .compatible = "mediatek,USB3",
 	 .data = &mtu3d_data,
 	 },
+        {
+		.compatible = "mediatek,usb3",
+   		.data = &mtu3d_data,
+	 },
 	{},
 };
 

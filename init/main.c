@@ -412,6 +412,7 @@ static noinline void __init_refok rest_init(void)
 	rcu_read_unlock();
 	complete(&kthreadd_done);
 
+	//smpboot_thread_init();
 	/*
 	 * The boot idle thread must execute schedule()
 	 * at least once to get things moving:

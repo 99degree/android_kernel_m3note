@@ -12,6 +12,10 @@
 #
 
 PLATFORM := $(subst ",,$(CONFIG_MTK_PLATFORM))
+
+ccflags-y += -I$(srctree)/drivers/misc/mediatek/ext_disp/$(PLATFORM)/  \
+	     -I$(srctree)/drivers/misc/mediatek/ext_disp/  
+
 ifeq (y, $(filter y, $(CONFIG_ARCH_MT6580) $(CONFIG_ARCH_MT6755) $(CONFIG_ARCH_MT6735) $(CONFIG_ARCH_MT6735M) $(CONFIG_ARCH_MT6753)))
 subdir-ccflags-y += -DCOMMON_DISP_LOG
 endif

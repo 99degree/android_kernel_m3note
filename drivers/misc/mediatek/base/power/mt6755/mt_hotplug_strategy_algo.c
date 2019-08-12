@@ -544,7 +544,7 @@ ALGO_END_WITH_ACTION:
 		hps_warn("ERROR! root cpu %d\n", target_root_cpu);
 	if (!get_suspend_status()) {
 		if (!((little_num_online == target_little_cores) && (big_num_online == target_big_cores))) {
-			hps_warn(
+			hps_debug(
 			"END :(%04lx)(%u)(%u) action end(%u)(%u)(%u)(%u) (%u)(%u)(%u)(%u) (%u)(%u)(%u) (%u)(%u)(%u) (%u)(%u)(%u)(%u)(%u) (%u)(%u)(%u)\n",
 		hps_ctxt.action, little_num_online, big_num_online, hps_ctxt.cur_loads, hps_ctxt.cur_tlp,
 		hps_ctxt.cur_iowait, hps_ctxt.cur_nr_heavy_task, hps_ctxt.little_num_limit_power_serv,

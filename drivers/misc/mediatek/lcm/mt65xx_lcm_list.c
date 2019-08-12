@@ -34,6 +34,9 @@ LCM_DSI_MODE_CON lcm_dsi_mode;
 #endif
 
 LCM_DRIVER *lcm_driver_list[] = {
+        &r63350_fhd_dsi_vdo_tcl_nt50358_lcm_drv,
+        &r63350_fhd_dsi_vdo_tcl_sharp_nt50358_lcm_drv,
+	&nt35695_fhd_dsi_cmd_truly_nt50358_lcm_drv,
 #if defined(OTM1284A_HD720_DSI_VDO_TM)
 	&otm1284a_hd720_dsi_vdo_tm_lcm_drv,
 #endif
@@ -991,6 +994,9 @@ LCM_DRIVER *lcm_driver_list[] = {
 };
 
 unsigned char lcm_name_list[][128] = {
+        "r63350_fhd_dsi_vdo_tcl_nt50358",
+        "r63350_fhd_dsi_vdo_tcl_sharp_nt50358",
+	"nt35695_fhd_dsi_cmd_truly_nt50358",
 #if defined(HX8392A_DSI_CMD)
 	"hx8392a_dsi_cmd",
 #endif

@@ -955,7 +955,7 @@ unsigned int bq25890_get_vdpm_state(void)
   *   [Internal Function]
   *
   *********************************************************/
-void bq25890_hw_component_detect(void)
+unsigned char bq25890_hw_component_detect(void)
 {
 	unsigned int ret = 0;
 	unsigned char val = 0;
@@ -969,6 +969,8 @@ void bq25890_hw_component_detect(void)
 
 	pr_debug("[bq25890_hw_component_detect] exist=%d, Reg[0x03]=0x%x\n",
 		 g_bq25890_hw_exist, val);
+
+	return val;
 }
 
 int is_bq25890_exist(void)
@@ -1038,12 +1040,19 @@ void bq25890_hw_init(void)
 
 static int bq25890_driver_probe(struct i2c_client *client, const struct i2c_device_id *id)
 {
+	unsigned char ret;
 	battery_log(BAT_LOG_CRTI, "[bq25890_driver_probe]\n");
 
 	new_client = client;
 
 	/* --------------------- */
-	bq25890_hw_component_detect();
+	ret = bq25890_hw_component_detect();
+	if (ret == 0)
+	{
+		battery_log(BAT_LOG_CRTI, "[bq25890_driver_probe] device not found.\n");
+		return -EIO;
+	}
+
 	bq25890_dump_register();
 	/* bq25890_hw_init(); //move to charging_hw_xxx.c */
 	chargin_hw_init_done = true;

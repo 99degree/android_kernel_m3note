@@ -1046,6 +1046,10 @@ static int do_dvfs_for_low_power(struct kicker_config *krconf)
 	return set_dvfs_with_opp(gvrctrl, krconf, opp_ctrl_table);
 }
 
+int __weak __maybe_unused disable_cg_fliper(void){
+	return 0;
+}
+
 /*
  * main function
  */

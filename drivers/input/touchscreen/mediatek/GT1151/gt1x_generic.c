@@ -811,9 +811,11 @@ s32 gt1x_read_version(struct gt1x_version_info *ver_info)
 s32 gt1x_get_chip_type(void)
 {
 	u8 opr_buf[4] = { 0x00 };
+        u8 hw_info[4] = { 0x00 };
 	u8 gt1x_data[] = { 0x02, 0x08, 0x90, 0x00 };
 	u8 gt9l_data[] = { 0x01, 0x10, 0x90, 0x00 };
 	s32 ret = -1;
+	int i = 0;
 
 	/* chip type already exist */
 	if (gt1x_chip_type != CHIP_TYPE_NONE)
@@ -826,11 +828,22 @@ s32 gt1x_get_chip_type(void)
 		return -1;
 	}
 
+	/* for gt9xx */
+        /* buf[2~5]: 00 06 90 00 */
+        /* hw_info: 00 90 06 00 */
+        for (i = 0; i < 4; i++)
+                hw_info[i] = opr_buf[3 - i];
+
+        GTP_INFO("IC Hardware info:%02x%02x%02x%02x", hw_info[0],
+                 hw_info[1], hw_info[2], hw_info[3]);
+
 	/* find chip type */
 	if (!memcmp(opr_buf, gt1x_data, sizeof(gt1x_data)))
 		gt1x_chip_type = CHIP_TYPE_GT1X;
 	else if (!memcmp(opr_buf, gt9l_data, sizeof(gt9l_data)))
 		gt1x_chip_type = CHIP_TYPE_GT2X;
+	else
+		gt1x_chip_type = CHIP_TYPE_NONE;
 
 	if (gt1x_chip_type != CHIP_TYPE_NONE) {
 		GTP_INFO("Chip Type: %s", (gt1x_chip_type == CHIP_TYPE_GT1X) ? "GT1X" : "GT2X");

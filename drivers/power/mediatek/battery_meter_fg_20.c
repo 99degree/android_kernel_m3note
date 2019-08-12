@@ -108,6 +108,7 @@ static void nl_send_to_user(u32 pid, int seq, struct fgd_nl_msg_t *reply_msg);
 static u_int g_fgd_pid;
 static unsigned int g_fgd_version = -1;
 static kal_bool init_flag;
+int dod_init_in_kernel(void);
 
 void battery_meter_set_init_flag(kal_bool flag)
 {
@@ -4558,7 +4559,7 @@ void bmd_ctrl_cmd_from_user(void *nl_data, struct fgd_nl_msg_t *ret_msg)
 		}
 		break;
 
-		case FG_DAEMON_CMD_SET_SWSOC:
+	case FG_DAEMON_CMD_SET_SWSOC:
 		{
 			signed int SWSOC;
 
@@ -4568,7 +4569,7 @@ void bmd_ctrl_cmd_from_user(void *nl_data, struct fgd_nl_msg_t *ret_msg)
 		}
 		break;
 
-		case FG_DAEMON_CMD_SET_HWSOC:
+	case FG_DAEMON_CMD_SET_HWSOC:
 		{
 			signed int HWSOC;
 

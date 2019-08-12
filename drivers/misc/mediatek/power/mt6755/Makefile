@@ -1,3 +1,5 @@
+#ccflags-y := -E -x c -P  -s
+
 #
 # Copyright (C) 2015 MediaTek Inc.
 #
@@ -27,6 +29,14 @@ endif
 obj-$(CONFIG_MTK_SMART_BATTERY) += battery_meter_hal.o
 obj-$(CONFIG_MTK_SMART_BATTERY) += mtk_bif_intf.o
 
+ifeq ($(CONFIG_MTK_SM5414_SUPPORT),y)
+     obj-$(CONFIG_MTK_SMART_BATTERY) += sm5414.o charging_hw_sm5414.o
+else
+
+ifeq ($(CONFIG_MTK_BQ24196_SUPPORT),y)
+     obj-$(CONFIG_MTK_SMART_BATTERY) += bq24196.o charging_hw_bq24196.o
+else
+
 ifeq ($(CONFIG_MTK_BQ24261_SUPPORT),y)
      obj-$(CONFIG_MTK_SMART_BATTERY) += bq24261.o charging_hw_bq24261.o
 else
@@ -51,4 +61,6 @@ else
                endif
           endif
      endif
+endif
+endif
 endif

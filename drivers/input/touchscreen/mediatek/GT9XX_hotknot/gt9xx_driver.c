@@ -65,7 +65,7 @@
 static struct tpd_filter_t tpd_filter_local = TPD_FILTER_PARA;
 #endif
 static int tpd_flag;
-int tpd_halt = 0;
+int tpd_halt_gt9xx = 0;
 static int tpd_eint_mode = 1;
 static struct task_struct *thread;
 static struct task_struct *probe_thread;
@@ -75,9 +75,9 @@ static int tpd_tui_flag;
 static int tpd_tui_low_power_skipped;
 
 static DECLARE_WAIT_QUEUE_HEAD(waiter);
-DEFINE_MUTEX(i2c_access);
-DEFINE_MUTEX(tp_wr_access);
-DEFINE_MUTEX(tui_lock);
+static DEFINE_MUTEX(i2c_access);
+static DEFINE_MUTEX(tp_wr_access);
+static DEFINE_MUTEX(tui_lock);
 
 
 const u16 touch_key_array[] = TPD_KEYS;
@@ -211,7 +211,7 @@ struct st_tpd_info {
 #pragma pack()
 
 struct st_tpd_info tpd_info;
-u8 int_type = 0;
+static u8 int_type = 0;
 u32 abs_x_max = 0;
 u32 abs_y_max = 0;
 u8 gtp_rawdiff_mode = 0;
@@ -1872,7 +1872,7 @@ static int tpd_irq_registration(void)
 	return ret;
 }
 
-int tpd_reregister_from_tui(void)
+__maybe_unused static int tpd_reregister_from_tui(void)
 {
 	int ret = 0;
 
@@ -3303,7 +3303,7 @@ static void tpd_on(void)
 	tpd_halt = 0;
 }
 
-int tpd_enter_tui(void)
+__maybe_unused static int tpd_enter_tui(void)
 {
 	int ret = 0;
 
@@ -3312,7 +3312,7 @@ int tpd_enter_tui(void)
 	return ret;
 }
 
-int tpd_exit_tui(void)
+__maybe_unused static int tpd_exit_tui(void)
 {
 	int ret = 0;
 

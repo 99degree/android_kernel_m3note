@@ -1,0 +1,4 @@
+f_ptp.c:36:1:ptpmod_exit	16	static
+f_ptp.c:31:29:ptp_alloc	16	static
+f_ptp.c:26:38:ptp_alloc_inst	16	static
+f_ptp.c:36:1:ptpmod_init	16	static

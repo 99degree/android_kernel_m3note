@@ -11,11 +11,50 @@
 # GNU General Public License for more details.
 #
 
-include $(srctree)/drivers/misc/mediatek/imgsensor/src/Makefile.custom
+MTK_PLATFORM := $(subst ",,$(CONFIG_MTK_PLATFORM))
+ARCH_MTK_PROJECT := $(subst ",,$(CONFIG_ARCH_MTK_PROJECT))
+
+MTK_PLATFORM_PATH_ROOT := $(srctree)/drivers/misc/mediatek/mach/$(MTK_PLATFORM)
+MTK_PROJECT_PATH_ROOT := $(srctree)/drivers/misc/mediatek/mach/$(MTK_PLATFORM)/$(ARCH_MTK_PROJECT)
+
+CONFIG_MTK_PLATFORM_SENSOR := $(CONFIG_MTK_PLATFORM)
+
+ifeq ($(CONFIG_ARCH_MT6735M),y)
+CONFIG_MTK_PLATFORM_SENSOR := mt6735m
+endif
+
+ifeq ($(CONFIG_ARCH_MT6753),y)
+CONFIG_MTK_PLATFORM_SENSOR := mt6753
+endif
+
+subdir-ccflags-y += -I$(MTK_PROJECT_PATH_ROOT)/camera/camera \
+
+MTK_CUSTOM_PATH  := $(srctree)/drivers/misc/mediatek
+
+subdir-ccflags-y += -I$(MTK_CUSTOM_PATH)/camera/$(MTK_PLATFORM) \
+             -I$(MTK_CUSTOM_PATH)/imgsensor/inc \
+             -I$(MTK_CUSTOM_PATH)/imgsensor/src/$(CONFIG_MTK_PLATFORM_SENSOR)/camera_hw \
+             -I$(MTK_CUSTOM_PATH)/cam_cal/inc \
+             -I$(MTK_CUSTOM_PATH)/smi \
+
+
+CUSTOM_KERNEL_FLAGS := $(addprefix -D, $(shell echo \
+             $(CONFIG_CUSTOM_KERNEL_IMGSENSOR0) | tr a-z A-Z))
+subdir-ccflags-y += $(CUSTOM_KERNEL_FLAGS)
+
+$(info IMGSENSOR0 $(CUSTOM_KERNEL_FLAGS))
+
+CUSTOM_KERNEL_FLAGS := $(addprefix -D, $(shell echo \
+             $(CONFIG_CUSTOM_KERNEL_IMGSENSOR1) | tr a-z A-Z))
+subdir-ccflags-y += $(CUSTOM_KERNEL_FLAGS)
+
+$(info IMGSENSOR1 $(CUSTOM_KERNEL_FLAGS))
+
+CUSTOM_KERNEL_FLAGS := $(addprefix -D, $(shell echo \
+             $(CONFIG_CUSTOM_KERNEL_IMGSENSOR2) | tr a-z A-Z))
+subdir-ccflags-y += $(CUSTOM_KERNEL_FLAGS)
+
+$(info IMGSENSOR2 $(CUSTOM_KERNEL_FLAGS))
 
 obj-y += $(subst ",,$(CONFIG_MTK_PLATFORM_SENSOR))/
-
-ifeq ($(CONFIG_MTK_CAM_MAX_NUMBER_OF_CAMERA),4)
-subdir-ccflags-y += -DMTK_SUB2_IMGSENSOR
-endif
 

@@ -129,7 +129,12 @@ struct Touch_SmartWake_ID {
 
 
 extern struct tpd_device *tpd;
-extern unsigned int tpd_rst_gpio_number;
+
+
+//avoid var duplication
+extern unsigned int tpd_rst_gpio_number_ft5x0x;
+#define tpd_rst_gpio_number tpd_rst_gpio_number_ft5x0x
+
 extern void tpd_button(unsigned int x, unsigned int y, unsigned int down);
 #ifdef CONFIG_CUST_FTS_APK_DEBUG
 extern int ft_rw_iic_drv_init(struct i2c_client *client);

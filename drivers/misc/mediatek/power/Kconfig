@@ -5,6 +5,36 @@ config MTK_PMIC
 	---help---
 	  MediaTek PMIC driver
 
+config MTK_SM5414_SUPPORT
+        bool "MTK_SM5414_SUPPORT"
+        select MTK_SWITCH_INPUT_OUTPUT_CURRENT_SUPPORT
+        default n
+        ---help---
+          Mediatek SM5414 driver.
+          Say y to support this driver.
+          Say n and choose other chargers.
+          This driver uses I2C bus.
+
+config MTK_BQ24196_SUPPORT
+        bool "MTK_BQ24196_SUPPORT"
+        select MTK_SWITCH_INPUT_OUTPUT_CURRENT_SUPPORT
+        default n
+        ---help---
+          Mediatek BQ24196 driver.
+          Say y to support this driver.
+          Say n and choose other chargers.
+          This driver uses I2C bus.
+
+config MTK_BQ24296_SUPPORT
+        bool "MTK_BQ24296_SUPPORT"
+        select MTK_SWITCH_INPUT_OUTPUT_CURRENT_SUPPORT
+        default n
+        ---help---
+          Mediatek BQ24296 driver.
+          Say y to support this driver.
+          Say n and choose other chargers.
+          This driver uses I2C bus.
+
 config MTK_RT9466_SUPPORT
 	bool "MTK_RT9466_SUPPORT"
 	select MTK_SWITCH_INPUT_OUTPUT_CURRENT_SUPPORT

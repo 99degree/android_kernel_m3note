@@ -533,7 +533,7 @@ static int kwdt_thread(void *arg)
 			}
 		}
 
-		msleep_interruptible((g_kinterval) * 1000);
+		msleep_interruptible(2 * 1000);
 
 #ifdef CONFIG_MTK_AEE_POWERKEY_HANG_DETECT
 		if ((cpu == 0) && (wk_tsk[cpu]->pid == current->pid)) {	/* only effect at cpu0 */

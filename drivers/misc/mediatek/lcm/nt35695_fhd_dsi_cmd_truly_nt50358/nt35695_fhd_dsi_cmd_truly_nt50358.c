@@ -112,7 +112,7 @@ static const struct of_device_id lcm_of_match[] = {
 #endif
 
 /*static struct i2c_client *tps65132_i2c_client;*/
-struct i2c_client *tps65132_i2c_client;
+static struct i2c_client *tps65132_i2c_client;
 
 /*****************************************************************************
  * Function Prototype
@@ -168,7 +168,7 @@ static int tps65132_remove(struct i2c_client *client)
 
 /*static int tps65132_write_bytes(unsigned char addr, unsigned char value)*/
 #if !defined(CONFIG_ARCH_MT6797)
-int tps65132_write_bytes(unsigned char addr, unsigned char value)
+static int tps65132_write_bytes(unsigned char addr, unsigned char value)
 {
 	int ret = 0;
 	struct i2c_client *client = tps65132_i2c_client;

@@ -118,9 +118,9 @@ static int tpd_flag;
 /*static int point_num = 0;
 static int p_point_num = 0;*/
 
-unsigned int tpd_rst_gpio_number = 0;
-unsigned int tpd_int_gpio_number = 0;
-unsigned int touch_irq = 0;
+unsigned int tpd_rst_gpio_number_ft5x0x = 0;
+static unsigned int tpd_int_gpio_number = 0;
+static unsigned int touch_irq = 0;
 #define TPD_OK 0
 
 /* Register define */
