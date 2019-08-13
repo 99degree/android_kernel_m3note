@@ -2390,7 +2390,7 @@ EXPORT_SYMBOL_GPL(spi_write_then_read);
 
 /*-------------------------------------------------------------------------*/
 
-#if IS_ENABLED(CONFIG_OF)
+#if IS_ENABLED(CONFIG_OF) && IS_ENABLED(CONFIG_OF_DYNAMIC)
 
 static int of_spi_notify(struct notifier_block *nb,
 				unsigned long action, void *arg)
@@ -2482,7 +2482,7 @@ static int __init spi_init(void)
 	if (status < 0)
 		goto err2;
 
-#if IS_ENABLED(CONFIG_OF)
+#if IS_ENABLED(CONFIG_OF) && IS_ENABLED(CONFIG_OF_DYNAMIC)
 	spi_of_notifier.notifier_call = of_spi_notify;
 	status = of_reconfig_notifier_register(&spi_of_notifier);
 	if (status)
@@ -2491,7 +2491,9 @@ static int __init spi_init(void)
 
 	return 0;
 #if IS_ENABLED(CONFIG_OF)
+#if IS_ENABLED(CONFIG_OF_DYNAMIC)
 err3:
+#endif
 	class_unregister(&spi_master_class);
 #endif
 err2:

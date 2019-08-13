@@ -109,7 +109,10 @@ static __maybe_unused LCM_DSI_MODE_SWITCH_CMD lcm_switch_mode_cmd;
 #ifdef BUILD_LK 
 extern int TPS65132_write_byte(kal_uint8 addr, kal_uint8 value);
 #else
-extern int tps65132_write_bytes(unsigned char addr, unsigned char value);
+ int tps65132_write_bytes(unsigned char addr, unsigned char value)
+{
+	return 0;
+}
 #endif
 
 struct LCM_setting_table {

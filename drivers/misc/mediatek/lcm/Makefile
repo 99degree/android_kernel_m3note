@@ -22,7 +22,7 @@ obj-$(CONFIG_MTK_LCM) += mt65xx_lcm_list.o        \
                          lcm_pmic.o               \
                          lcm_util.o
 
-obj-$(CONFIG_MTK_LCM) += tps65132.o
+#obj-$(CONFIG_MTK_LCM) += tps65132.o
 
 LCM_LISTS := $(subst ",,$(CONFIG_CUSTOM_KERNEL_LCM))
 #obj-$(CONFIG_MTK_LCM) += $(foreach LCM,$(LCM_LISTS),$(LCM)/)

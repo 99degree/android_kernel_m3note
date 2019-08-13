@@ -1954,7 +1954,7 @@ void i2c_clients_command(struct i2c_adapter *adap, unsigned int cmd, void *arg)
 }
 EXPORT_SYMBOL(i2c_clients_command);
 
-#if IS_ENABLED(CONFIG_OF)
+#if IS_ENABLED(CONFIG_OF) && IS_ENABLED(CONFIG_OF_DYNAMIC)
 
 static int of_i2c_notify(struct notifier_block *nb,
 				unsigned long action, void *arg)
@@ -2037,7 +2037,7 @@ static int __init i2c_init(void)
 	if (retval)
 		goto class_err;
 
-#if IS_ENABLED(CONFIG_OF)
+#if IS_ENABLED(CONFIG_OF) && IS_ENABLED(CONFIG_OF_DYNAMIC)
 	i2c_of_notifier.notifier_call = of_i2c_notify;
 	retval = of_reconfig_notifier_register(&i2c_of_notifier);
 	if (retval)
@@ -2046,7 +2046,9 @@ static int __init i2c_init(void)
 
 	return 0;
 #if IS_ENABLED(CONFIG_OF)
+#if IS_ENABLED(CONFIG_OF_DYNAMIC)
 notifier_err:
+#endif
 	i2c_del_driver(&dummy_driver);
 #endif
 class_err:
