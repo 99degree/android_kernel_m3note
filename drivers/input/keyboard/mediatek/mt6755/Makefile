@@ -10,8 +10,10 @@
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 # GNU General Public License for more details.
 #
-
-subdir-ccflags-y += -Werror -I$(srctree)/drivers/input/keyboard/mediatek/
+ccflags-y += -I$(srctree)/drivers/misc/mediatek/include/
+ccflags-y += -I$(srctree)/drivers/misc/mediatek/include/mt-plat/$(CONFIG_MTK_PLATFORM)/include/
+ccflags-y += -I$(srctree)/drivers/input/keyboard/mediatek/
+ccflags-y += -I$(srctree)/drivers/input/keyboard/mediatek/$(CONFIG_MTK_PLATFORM)/
 
 ifeq ($(CONFIG_MT_SND_SOC_6755),y)
 	EXTRA_CFLAGS += -I$(srctree)/sound/soc/mediatek/common_define

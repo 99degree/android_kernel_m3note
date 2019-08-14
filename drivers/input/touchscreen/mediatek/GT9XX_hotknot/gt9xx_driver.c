@@ -2930,7 +2930,7 @@ Output:
 *******************************************************/
 static s8 gtp_enter_sleep(struct i2c_client *client)
 {
-	int ret = 0;
+	int __maybe_unused ret = 0;
 
 #if defined(CONFIG_GTP_COMPATIBLE_MODE)
 	if (CHIP_TYPE_GT9F == gtp_chip_type) {

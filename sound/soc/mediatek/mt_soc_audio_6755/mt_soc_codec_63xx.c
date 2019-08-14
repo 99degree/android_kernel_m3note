@@ -962,7 +962,7 @@ static void SetDcCompenSation(void)
 }
 
 #ifdef CONFIG_MTK_SPEAKER
-static void SetDcCompenSation_SPKHP(void)
+static void __maybe_unused SetDcCompenSation_SPKHP(void)
 {
 #ifdef EFUSE_HP_TRIM		/* use efuse trim */
 	Ana_Set_Reg(AUDDEC_ANA_CON2, 0x0800, 0x0800);	/* Enable trim circuit of HP */
